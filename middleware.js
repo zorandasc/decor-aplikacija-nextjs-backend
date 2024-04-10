@@ -6,6 +6,8 @@ const allowedOrigins = [
   "https://127.0.0.1:3000",
 ];
 
+console.log(process.env.ORIGIN_URL)
+
 const corsOptions = {
   "Access-Control-Allow-Credentials": "true",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
