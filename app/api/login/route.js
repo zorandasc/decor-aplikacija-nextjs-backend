@@ -2,9 +2,9 @@ const bcrypt = require("bcrypt");
 
 import { User, validateUser } from "@models/User";
 import { connectToDB } from "@utils/database";
+import { NextResponse } from "next/server";
 
 export const POST = async (req, res) => {
-
   try {
     //validacija broja karaktera i struktura
     const body = await req.json();
@@ -36,15 +36,12 @@ export const POST = async (req, res) => {
 
     // Creates Secure Cookies with new refresh token
     //in header and new access token in body
-    return new Response(JSON.stringify({ accessToken }), {
+    return new NextResponse(JSON.stringify({ accessToken }), {
       status: 200,
       headers: {
-        "Set-Cookie": `jwt=${refreshToken}`,
-        HttpOnly: true,
-        Secure: true,
-        SameSite: "None",
-        "Max-Age": `${24 * 60 * 60 * 1000}`,
-        Path: "/",
+        "Set-Cookie": `jwt=${refreshToken}; sameSite=none; httpOnly=true; secure=true; maxAge=${
+          24 * 60 * 60 * 1000
+        }; path=/`,
       },
     });
   } catch (error) {

@@ -10,7 +10,7 @@ export const GET = async (req, res) => {
 
   if (!cookie?.value) return new Response("NO TOKEN VALUE", { status: 403 });
   const refreshToken = cookie.value;
-  console.log("refreshToken: ", refreshToken);
+
 
   let foundUser = null;
   //AKO POSTIJI COOKIE, PROVJERI DA LI REFRESH TOKEN POSTOJI U BAZI
@@ -18,7 +18,6 @@ export const GET = async (req, res) => {
     await connectToDB();
 
     foundUser = await User.findOne({ refreshToken });
-    console.log("foundUser: ", foundUser);
 
     //detected refresh token reuse,we receive cooke,
     //but not finded user, that mean that te refreshtoken
