@@ -6,7 +6,6 @@ const allowedOrigins = [
   "https://127.0.0.1:3000",
 ];
 
-
 const corsOptions = {
   "Access-Control-Allow-Credentials": "true",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -47,5 +46,14 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: "/api/:path*",
+  matcher: [
+    "/api/:path*",
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    "/((?!|_next/static|_next/image|favicon.ico).*)",
+  ],
 };
