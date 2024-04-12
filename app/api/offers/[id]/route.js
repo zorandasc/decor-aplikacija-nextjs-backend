@@ -1,5 +1,7 @@
 import { Offer } from "@models/Offer";
 import { connectToDB } from "@utils/database";
+import { checkAuthentication, checkAuthorization } from "@utils/protection";
+import ROLES_LIST from "@utils/roles_list";
 
 export const GET = async (request, { params }) => {
   const authenticated = await checkAuthentication();

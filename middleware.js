@@ -21,13 +21,22 @@ export async function middleware(request) {
   // Handle preflighted requests
   const isPreflight = request.method === "OPTIONS";
 
-  if (isPreflight && request.nextUrl.pathname.startsWith("/api/login")) {
+
+  //ja dodao ove pathname zato sto next.js middlexare javlja neku connection error
+  //pa da minimiziram broj ponavljnaja greske samo na login i register
+  if (
+    isPreflight &&
+    (request.nextUrl.pathname.startsWith("/api/login") ||
+      request.nextUrl.pathname.startsWith("/api/register"))
+  ) {
     const preflightHeaders = {
       ...(isAllowedOrigin && {
         "Access-Control-Allow-Origin": origin,
         ...corsOptions,
       }),
     };
+
+    console.log(preflightHeaders);
 
     return NextResponse.json({}, { status: 200, headers: preflightHeaders });
   }

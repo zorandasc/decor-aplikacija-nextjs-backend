@@ -1,11 +1,26 @@
 import { User, validateUser } from "@models/User";
 import { connectToDB } from "@utils/database";
 import bcrypt from "bcrypt";
+import { checkAuthentication, checkAuthorization } from "@utils/protection";
+import ROLES_LIST from "@utils/roles_list";
 
+//SAMO ADMIN USER MOZE KREIRATI NOVOG USERA
 export const POST = async (request) => {
+  const authenticated = await checkAuthentication();
+
+  if (!authenticated) {
+    return new Response("NOT AUTHENTCATED.", { status: 403 });
+  }
+
+  const authorized = await checkAuthorization(authenticated, ROLES_LIST.Admin);
+
+  if (!authorized) {
+    return new Response("NOT AUTHORIZED.", { status: 401 });
+  }
+
   try {
     const body = await request.json();
-  
+
     //moraju postojati polja username i password
     const { error } = validateUser(body);
     if (error)
@@ -36,6 +51,7 @@ export const POST = async (request) => {
       { status: 201 }
     );
   } catch (error) {
+    console.log("FROM REGISTER",error);
     return new Response("Failed to create a new user", { status: 500 });
   }
 };
