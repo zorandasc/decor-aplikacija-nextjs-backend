@@ -1,4 +1,4 @@
-import { Offer } from "@models/Offer";
+import { Offer, validateOffer } from "@models/Offer";
 import { connectToDB } from "@utils/database";
 import { checkAuthentication, checkAuthorization } from "@utils/protection";
 import ROLES_LIST from "@utils/roles_list";
@@ -23,7 +23,7 @@ export const GET = async (request, { params }) => {
   try {
     await connectToDB();
 
-    const offer = await Offer.findOne({ _id: params.id }).select("-__v").exec();
+    const offer = await Offer.findOne({ _id: params.id }).select("-__v");
 
     if (!offer)
       return new Response("Narudžbina sa datim id ne postoji.", {
@@ -59,7 +59,7 @@ export const PUT = async (request, { params }) => {
     }
 
     const body = await request.json();
-    const { error } = validateOrder(body);
+    const { error } = validateOffer(body);
 
     if (error)
       return new Response(JSON.stringify(error.details[0].message), {
@@ -91,6 +91,7 @@ export const PUT = async (request, { params }) => {
 
     return new Response("Successfully updated the Offer", { status: 200 });
   } catch (error) {
+    console.log("FROM OFFERS:", error);
     return new Response("Error Updating Prompt", { status: 500 });
   }
 };
@@ -110,7 +111,7 @@ export const DELETE = async (request, { params }) => {
   try {
     await connectToDB();
 
-    const offer = await Offer.findByIdAndRemove({ _id: params.id });
+    const offer = await Offer.findByIdAndDelete(params.id);
 
     if (!offer)
       return new Response(`Ponuda sa id: ${params.id} ne postoji.`, {
@@ -121,6 +122,7 @@ export const DELETE = async (request, { params }) => {
       status: 200,
     });
   } catch (error) {
+    console.log("FROM OFFER DELETE", error);
     return new Response("Error deleting ponudu", { status: 500 });
   }
 };
