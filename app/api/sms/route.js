@@ -5,11 +5,11 @@ const client = require("twilio")(accountSid, authToken);
 
 export const POST = async (request, response) => {
   const body = await request.json();
-
-  console.log(body);
   try {
     const message = await client.messages.create({
-      body: "Svdbeni Cvet ima novu poruku za vas na zorand666@gmail.com",
+      body: `Svdbeni Cvet ima novu poruku za vas :).
+      Od korisnika: ${body.name} email: ${body.email}.
+      Vise detalja na dekoracijasvadbenicvet@gmail.com`,
       to: "+38766234417", // Text your number
       from: "+12514281722", // From a valid Twilio number
     });
