@@ -7,9 +7,7 @@ export const POST = async (request, response) => {
   const body = await request.json();
   try {
     const message = await client.messages.create({
-      body: `Svdbeni Cvet ima novu poruku za vas:\n
-      Korisnik: ${body.name}.\n Email: ${body.email}.\n
-      Vise detalja na:\n dekoracijasvadbenicvet@gmail.com`,
+      body: `Svdbeni Cvet ima novu poruku za vas: Korisnik: ${body.name}. Email: ${body.email}. Vise detalja na: dekoracijasvadbenicvet@gmail.com`,
       to: "+38766234417", // Text your number
       from: "+12514281722", // From a valid Twilio number
     });
