@@ -4,7 +4,9 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 
 export const POST = async (request, response) => {
-  console.log(request);
+  const body = await request.json();
+
+  console.log(body);
   try {
     const message = await client.messages.create({
       body: "Svdbeni Cvet ima novu poruku za vas na zorand666@gmail.com",
