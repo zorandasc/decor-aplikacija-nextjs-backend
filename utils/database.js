@@ -11,7 +11,7 @@ export const connectToDB = async () => {
 
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
-      dbName: "decorwood_test",
+      dbName: "decorwood",
       //useNewUrlParser: true,
       //useUnifiedTopology: true,
     });
