@@ -19,7 +19,7 @@ export const GET = async (request, { params }) => {
   if (!authorized) {
     return new Response("NOT AUTHORIZED.", { status: 401 });
   }
-  
+
   try {
     await connectToDB();
 
@@ -63,7 +63,7 @@ export const PUT = async (request, { params }) => {
     const { error } = validateOrder(body);
 
     if (error)
-      return new Response(JSON.stringify(error.details[0].message), {
+      return new Response(error.details[0].message, {
         status: 400,
       });
 

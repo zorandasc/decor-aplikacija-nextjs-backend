@@ -24,7 +24,7 @@ export const POST = async (request) => {
     //moraju postojati polja username i password
     const { error } = validateUser(body);
     if (error)
-      return new Response(JSON.stringify(error.details[0].message), {
+      return new Response(error.details[0].message, {
         status: 400,
       });
 
@@ -51,7 +51,7 @@ export const POST = async (request) => {
       { status: 201 }
     );
   } catch (error) {
-    console.log("FROM REGISTER",error);
+    console.log("FROM REGISTER", error);
     return new Response("Failed to create a new user", { status: 500 });
   }
 };

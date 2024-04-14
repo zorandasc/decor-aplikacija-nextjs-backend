@@ -51,7 +51,7 @@ export const POST = async (request) => {
   const { error } = validateOrder(body);
 
   if (error) {
-    return new Response(JSON.stringify(error.details[0].message), {
+    return new Response(error.details[0].message, {
       status: 400,
     });
   }

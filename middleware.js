@@ -36,8 +36,6 @@ export async function middleware(request) {
       }),
     };
 
-    console.log(preflightHeaders);
-
     return NextResponse.json({}, { status: 200, headers: preflightHeaders });
   }
 
