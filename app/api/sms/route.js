@@ -5,10 +5,20 @@ const client = require("twilio")(accountSid, authToken);
 
 export const POST = async (request, response) => {
   const body = await request.json();
+  /*
+  client.lookups.v2
+    .phoneNumbers("+381649977288")
+    .fetch()
+    .then((phone_number) => console.log(phone_number));
+  return new Response(JSON.stringify({ }), {
+    status: 201,
+  });
+  */
+
   try {
     const message = await client.messages.create({
       body: `Svdbeni Cvet ima novu poruku za vas: Korisnik: ${body.name}. Email: ${body.email}. Vise detalja na: dekoracijasvadbenicvet@gmail.com`,
-      to: "+38766234417", // Text your number
+      to: "+381649977288", // Text your number
       from: "+12514281722", // From a valid Twilio number
     });
     return new Response(
